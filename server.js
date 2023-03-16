@@ -5,9 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var moviesRouter = require('./routes/movies');
 
 var app = express();
+
+// require database file
+// this will create a connection 
+// from our server.js (localhost:3000) -> Mongodb localhost:27017
+require('./config/database');
+// Since we are not exporting anything from the database file, 
+// no need to save it to a variable
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/movies', moviesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
