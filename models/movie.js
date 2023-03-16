@@ -9,7 +9,8 @@ const movieSchema = new mongoose.Schema({
 	title: String,  // String, is from Mongoose
 	releaseYear: Number, // Number is from Mongoose, Schema Types
 	mpaaRating: String,
-	cast: [String]
+	cast: [String],
+	nowShowing: Boolean // Boolean, from mongoose, google mongoose schema types
 })
 
 module.exports = mongoose.model('Movie', movieSchema);
