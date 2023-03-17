@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 
+
 // Schema is a guard on our collection that says
 // everytime we want to add a document (object) to our collection 
 // in mongodb, it must have this shape, 

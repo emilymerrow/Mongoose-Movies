@@ -3,11 +3,33 @@ const MovieModel = require('../models/movie');
 //MovieModel can perform Crud operations on the database
 // Google Questions
 // Query Methods for Mongoose Models? How .find(), `.findOne`, findOneAndUpdate
+// How can I find all of a resource using a mongoose model c(r)ud
+// How can I update a resource using a mongoose model? cr(u)d
+// How can I delete a resource using a mongoose model cru(d)
+// How can I create a resource using a mongoose model (c)rud
 // create and object with a mongoose Model
 // How to delete data(document) with a mongoose model
 module.exports = {
 	new: newMovie,
-	create
+	create,
+	index
+}
+
+function index(req, res){
+
+	MovieModel.find({})
+			  .then(function(allMovies){
+
+				console.log(allMovies, " <_ data from the db")
+				// respond to the client in the .then, we have to wait 
+				// for the data to come back from the database
+				res.render('movies/index', {movies: allMovies})
+			  }).catch(function(err){
+				console.log(err);
+				res.send(err)
+			  })
+
+	
 }
 
 function create(req, res){
