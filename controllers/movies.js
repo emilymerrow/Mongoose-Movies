@@ -12,11 +12,20 @@ const MovieModel = require('../models/movie');
 module.exports = {
 	new: newMovie,
 	create,
-	index
+	index,
+	show
 }
+
+function show(req, res) {
+	Movie.findById(req.params.id, function(err, movieDoc) {
+	  res.render('movies/show', { movie: movieDoc });
+	});
+  }
 
 function index(req, res){
 
+	//  the empty object {} is called a
+	// query object, mongoose
 	MovieModel.find({})
 	// MovieModel.find is our mongoose model going to mongodb
 	// to find all the movies in the movies collection
@@ -45,8 +54,7 @@ function create(req, res){
 
 	// Asynchronous, The model, has to travel to talk to the database, 
 	// database is one another port, so it takes times for this to happen
-	MovieModel.create(req.body)
-			  .then(function(movieWeCreatedInTheDb){
+	MovieModel.create(req.body).then(function(movieWeCreatedInTheDb){
 			
 				// This function is the callback, to the create method, 
 				// so this functions gets called after we get a response from the database
