@@ -18,6 +18,11 @@ module.exports = {
 function index(req, res){
 
 	MovieModel.find({})
+	// MovieModel.find is our mongoose model going to mongodb
+	// to find all the movies in the movies collection
+	// when the model comes back from the database
+	// we want a function to run
+	// that is the .then
 			  .then(function(allMovies){
 
 				console.log(allMovies, " <_ data from the db")
