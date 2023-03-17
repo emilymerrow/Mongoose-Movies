@@ -16,10 +16,23 @@ module.exports = {
 	show
 }
 
+
+
+
+
+
+
+
 function show(req, res) {
-	Movie.findById(req.params.id, function(err, movieDoc) {
-	  res.render('movies/show', { movie: movieDoc });
-	});
+
+	MovieModel.findOne(req.params.id)
+			  .then(function(err, movieDoc){
+				console.log(movieDoc)
+				res.render('movies/show', { movie: movieDoc });
+			  }).catch((err) =>{
+				console.log(err);
+				res.send(err)
+			  })
   }
 
 function index(req, res){

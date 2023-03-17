@@ -7,12 +7,21 @@ const mongoose = require('mongoose')
 // in mongodb, it must have this shape, 
 // keys must be the same name, and the values must be of the type Specified below (String, Number, Boolean, etc)
 const movieSchema = new mongoose.Schema({
-	title: String,  // String, is from Mongoose
-	releaseYear: Number, // Number is from Mongoose, Schema Types
-	mpaaRating: String,
+	title: {
+	  type: String,
+	  required: true
+	},
+	releaseYear: {
+	  type: Number,
+	  default: function () {
+		return new Date().getFullYear();
+	  }
+	}, mpaaRating: String,
 	cast: [String],
-	nowShowing: Boolean // Boolean, from mongoose, google mongoose schema types
-})
+	nowShowing: { type: Boolean, default: false }
+  }, {
+	timestamps: true
+  });
 
 module.exports = mongoose.model('Movie', movieSchema);
 // mongoose.model method does two things
