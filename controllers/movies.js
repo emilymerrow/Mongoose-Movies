@@ -24,9 +24,9 @@ module.exports = {
 
 
 function show(req, res) {
-
-	MovieModel.findOne(req.params.id)
-			  .then(function(err, movieDoc){
+	
+	MovieModel.findById(req.params.id)
+			  .then(function(movieDoc){
 				console.log(movieDoc)
 				res.render('movies/show', { movie: movieDoc });
 			  }).catch((err) =>{
@@ -67,7 +67,8 @@ function create(req, res){
 
 	// Asynchronous, The model, has to travel to talk to the database, 
 	// database is one another port, so it takes times for this to happen
-	MovieModel.create(req.body).then(function(movieWeCreatedInTheDb){
+	MovieModel.create(req.body)
+	.then(function(movieWeCreatedInTheDb){
 			
 				// This function is the callback, to the create method, 
 				// so this functions gets called after we get a response from the database
