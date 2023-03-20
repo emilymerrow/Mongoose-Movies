@@ -1,5 +1,7 @@
 //model is always capitalized, in every language
 const MovieModel = require('../models/movie');
+// import the PerformerModel 
+const PerformerModel = require('../models/performer');
 //MovieModel can perform Crud operations on the database
 // Google Questions
 // Query Methods for Mongoose Models? How .find(), `.findOne`, findOneAndUpdate
@@ -11,6 +13,7 @@ const MovieModel = require('../models/movie');
 // How to delete data(document) with a mongoose model
 module.exports = {
 	new: newMovie,
+	
 	create,
 	index,
 	show
@@ -27,8 +30,24 @@ function show(req, res) {
 	
 	MovieModel.findById(req.params.id)
 			  .then(function(movieDoc){
-				console.log(movieDoc)
-				res.render('movies/show', { movie: movieDoc });
+				console.log(movieDoc) // <- movieDoc is the object from the database!
+
+				// Goal: TO find all of the Performers that are not in the movies cast array
+				// 1. find the movie (movieDoc) so we know what performers are in the cast array
+				// 2. Use the PerformerModel to query the performers collection to find all the performers
+				// whose id is not in the movieDoc.cast array
+				PerformerModel.find(
+					{_id: {$nin: movieDoc.cast}} // find all the performers that are not in ($nin) the movieDoc.cast array
+				).then(function(performersNotInMovie){
+					res.render('movies/show', { 
+						movie: movieDoc, // this has the cast array, the performers in the movie
+						performersNotInMovie // this is for our dropdown menu
+					});
+				})
+
+
+
+				
 			  }).catch((err) =>{
 				console.log(err);
 				res.send(err)
@@ -61,7 +80,6 @@ function index(req, res){
 
 function create(req, res){
 
-	req.body.cast = req.body.cast.split(','); // changes, those strings into an array
 	req.body.nowShowing = !!req.body.nowShowing;
 	console.log(req.body, " <- contents of the form, req.body");
 
@@ -77,7 +95,7 @@ function create(req, res){
 				// Always respond to the client, in the cb function of the model
 				// because we want to make sure the database performed its job before 
 				// we respond to the client
-				res.redirect('/movies'); // 404 because we haven't made the index route yet
+				res.redirect(`/movies/${movieWeCreatedInTheDb._id}`); // 404 because we haven't made the index route yet
 		
 			}).catch((err) => {
 				console.log(err);
