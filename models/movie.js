@@ -29,7 +29,7 @@ const movieSchema = new mongoose.Schema({
 		return new Date().getFullYear();
 	  }
 	}, mpaaRating: String,
-	cast: [String],
+
 	nowShowing: { type: Boolean, default: false }
   }, {
 	timestamps: true
