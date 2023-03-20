@@ -14,7 +14,7 @@
   <!-- end cast list -->
 </section>
 <!-- add to cast form below this comment -->
-<form id="add-per-to-cast" action="???" method="POST">
+<form id="add-per-to-cast" action="/movies/<%= movie._id %>/performers" method="POST">
   <select name="performerId">
     <%- performersNotInMovie.map(p => 
       `<option value="${p._id}">${p.name}</option>`
