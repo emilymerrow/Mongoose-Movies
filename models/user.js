@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-
+ 
+// Don't add the Relationship on the User Schema
 const userSchema = new mongoose.Schema(
   {
     name: String,
@@ -8,7 +9,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     email: String,
-    avatar: String,
+    avatar: String
   },
   {
     timestamps: true,

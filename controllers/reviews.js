@@ -15,6 +15,17 @@ function create(req, res){
 					// mutating a document, 
 					// we are adding/or removing/updating 
 					// something you found from the database
+
+					// req.body is our review
+					// req.user is our logged in user
+					// assinged by deserialize user in passport/config
+					// file, the last function in that file!
+					req.body.username = req.user.name;
+					req.body.userId = req.user._id;
+					req.body.userAvatar = req.user.avatar;
+
+
+
 					movieDocument.reviews.push(req.body);
 					// you have to save the document to tell 
 					// mongodb you change something, cuz this 
