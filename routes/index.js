@@ -29,4 +29,13 @@ router.get('/oauth2callback', passport.authenticate(
   }
 ))
 
+
+router.get('/logout', function(req, res){
+  req.logout(function(){ // <- req.logout is from passport and it destorys the session cookie!, so now a new one is created
+    // with no user._id inside of it, so we have no idea who the user is when a request is made to the server!
+    res.redirect('/movies') // <- when the user logouts where do you want to go?
+  })
+})
+
+
 module.exports = router;

@@ -27,7 +27,7 @@ module.exports = {
 
 
 function show(req, res) {
- req.user	
+
 	MovieModel.findById(req.params.id)
 			  .populate('cast') // pass the name of the key, with the id/id's
 			  .exec() // to execute the populate
@@ -44,6 +44,7 @@ function show(req, res) {
 					res.render('movies/show', { 
 						movie: movieDoc, // this has the cast array, the performers in the movie
 						performersNotInMovie // this is for our dropdown menu
+					
 					});
 				})
 

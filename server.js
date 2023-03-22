@@ -46,6 +46,28 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// this custom middlware needs to be after passport!
+// =================================================
+// =================================================
+// =================================================
+// THIS code means you never have to pass req.user in your controller functions in the render!
+// to inject user into the your ejs template
+// THis is super useful project so Read these comments!
+app.use(function(req, res, next){
+  res.locals.user = req.user;  // req.user, is from the cleint
+  // it will be a user document or undefined (not logged in)
+
+  // res.locals, is an object that is passed into EVERY SINGLE EJS PAGE IN YOUR VIEWS FOLDER
+  // and it will pass a user object into it which will be the user document or undefined (if not logged in)
+  // whatever key you attach to res.locals is avialable in every ejs file!
+  next()
+})
+// =================================================
+// =================================================
+// =================================================
+
+
 app.use('/', indexRouter);
 app.use('/movies', moviesRouter);
 
