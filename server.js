@@ -19,6 +19,7 @@ const app = express();
 // this will create a connection 
 // from our server.js (localhost:3000) -> Mongodb localhost:27017
 require('./config/database');
+require('./config/passport'); // <- setups up passport functions
 // Since we are not exporting anything from the database file, 
 // no need to save it to a constiable
 

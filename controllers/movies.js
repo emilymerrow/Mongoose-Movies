@@ -27,7 +27,7 @@ module.exports = {
 
 
 function show(req, res) {
-	
+ req.user	
 	MovieModel.findById(req.params.id)
 			  .populate('cast') // pass the name of the key, with the id/id's
 			  .exec() // to execute the populate
