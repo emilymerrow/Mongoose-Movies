@@ -5,6 +5,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const passport = require('passport');
 
 const indexRouter = require('./routes/index');
 const moviesRouter = require('./routes/movies');
@@ -24,6 +26,18 @@ require('./config/database');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+app.use(session({
+  secret: process.env.SECRET, // <- this is accessing the variable in the .env file
+  resave: false,
+  saveUninitialized: true
+}));
+
+// PASSPORT MUST BE ADDED AFTER THE SESSION, because it USES
+// THE SESSION COOKIE TO STORE THE LOGGED IN USERS ID
+app.use(passport.initialize()); // <- copy paste job from the docs
+app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(express.json());
