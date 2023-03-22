@@ -1,3 +1,5 @@
+require('dotenv').config(); // this line allows our node app to read from the .env file!
+// process.env.VARIABLE_NAME, process.env.GOOGLE_CALLBACK or process.env.GOOGLE_SECRET
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
