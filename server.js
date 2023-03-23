@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
+const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const moviesRouter = require('./routes/movies');
@@ -28,7 +29,8 @@ require('./config/passport'); // <- setups up passport functions
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
+// The point of the sessions cookie is so we can keep track of what client is making 
+// http requests to the server 
 app.use(session({
   secret: process.env.SECRET, // <- this is accessing the variable in the .env file
   resave: false,
@@ -45,7 +47,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(methodOverride('_method')); // <- this needs to be added for PUT And DELETE request that are in the 
+// query strings from the client http requests /?_method=DELETE
 
 // this custom middlware needs to be after passport!
 // =================================================
